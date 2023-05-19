@@ -1,35 +1,35 @@
+import { addContact } from 'components/Redux/Contacts/Slice';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../Redux/Contacts/Slice';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const dispatch = useDispatch()
+  const [phone, setPhone] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const target = e.target.name;
     if (target === 'name') {
       setName(e.target.value);
     } else {
-      setNumber(e.target.value);
+      setPhone(e.target.value);
     }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newContact = {
+      const newContact = {
       id: nanoid(),
       name,
-      number,
+      phone,
     };
+    console.log(newContact);
     dispatch(addContact(newContact));
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -57,12 +57,10 @@ export const ContactForm = () => {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={handleChange}
-          value={number}
+          value={phone}
         />
       </label>
       <button type="submit">Add contacts</button>
     </form>
   );
 };
-
-
