@@ -46,16 +46,15 @@ export const contactSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteOneContact.fulfilled, (state, action) => {
-        state.isLoading = false;
         const index = state.items.findIndex(
-          contact => contact.id === action.payload
+          contact => contact.id === action.payload.id
         );
         state.items.splice(index, 1);
+        state.isLoading = false;
       })
       .addCase(deleteOneContact.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.error.message;
+        state.isLoading = false;
       });
   },
 });
-
