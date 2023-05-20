@@ -6,7 +6,6 @@ import { filteredContacts } from 'components/Redux/selectors';
 export const ContactsList = () => {
 
   const contacts = useSelector(filteredContacts);
-
   return (
     <ul className={css.contacts__box}>
       {contacts.length !== 0 ? (

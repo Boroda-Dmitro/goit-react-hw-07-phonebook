@@ -14,10 +14,10 @@ export const App = () => {
   const contacts = useSelector(allContacts);
   const loading = useSelector(isLoading);
   const isError = useSelector(error);
-  const dsspatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
-    dsspatch(fetchContacts());
-  }, [dsspatch]);
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div className={css.container}>
