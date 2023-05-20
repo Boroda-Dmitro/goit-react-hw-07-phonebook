@@ -5,7 +5,6 @@ import {
   deleteOneContact,
 } from '../operation/operation';
 
-
 const contacts = {
   items: [],
   isLoading: false,
@@ -15,7 +14,7 @@ const contacts = {
 export const contactSlice = createSlice({
   name: 'contacts',
   initialState: contacts,
-  
+
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
@@ -30,9 +29,21 @@ export const contactSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
+      .addCase(postNewContact.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(postNewContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items.push(action.payload);
+      })
+      .addCase(postNewContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteOneContact.pending, state => {
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(deleteOneContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -40,35 +51,11 @@ export const contactSlice = createSlice({
           contact => contact.id === action.payload
         );
         state.items.splice(index, 1);
+      })
+      .addCase(deleteOneContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { addContact, deleteContact } = contactSlice.actions;
-
-
-// reducers: {
-//   addContact(state, action) {
-//     if (
-//       state.items.find(
-//         contact =>
-//           contact.name.toLowerCase() === action.payload.name.toLowerCase() ||
-//           contact.phone === action.payload.phone
-//       )
-//     ) {
-//       toast.error(
-//         `${action.payload.name} or ${action.payload.phone} is already in contacts`
-//       );
-//     } else {
-//       state.items.push(action.payload);
-//       postNewContact(action.payload);
-//     }
-//   },
-//   deleteContact(state, action) {
-//     const index = state.items.findIndex(
-//       contact => contact.id === action.payload
-//     );
-//     state.items.splice(index, 1);
-//     deleteOneContact(action.payload);
-//   },
-// },
