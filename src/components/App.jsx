@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import css from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { allContacts, isLoading } from './Redux/selectors';
+import { allContacts, isLoading, error } from './Redux/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from './Redux/operation/operation';
 import { Loader } from './Loader/Loader';
@@ -13,6 +13,7 @@ import { Loader } from './Loader/Loader';
 export const App = () => {
   const contacts = useSelector(allContacts);
   const loading = useSelector(isLoading);
+  const isError = useSelector(error);
   const dsspatch = useDispatch();
   useEffect(() => {
     dsspatch(fetchContacts());
@@ -24,7 +25,9 @@ export const App = () => {
       <ContactForm />
 
       <h2>Contacts</h2>
-      {loading ? (
+      {isError ? (
+        <p>{isError.message}</p>
+      ) : loading ? (
         <Loader />
       ) : contacts.length !== 0 ? (
         <>

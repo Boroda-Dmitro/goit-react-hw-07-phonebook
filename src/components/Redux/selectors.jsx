@@ -10,3 +10,4 @@ export const filteredContacts = ({ contacts: { items }, filter }) => {
 };
 
 export const isLoading = ({ contacts: { isLoading }}) => isLoading
+export const error = ({ contacts: { error }}) => error
