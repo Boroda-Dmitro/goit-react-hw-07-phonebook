@@ -13,19 +13,16 @@ export const getContacts = async () => {
 
 export const addNewContact = async contact => {
   try {
-    const response = await axios.post(URL, contact);
-    const newContact = response.data;
-    return newContact;
+    const contacts = await axios.post(URL, contact);
+    return contacts.data;
   } catch (error) {
     console.error('Error adding contact:', error);
   }
 };
 
 export const deleteContactById = async id => {
-
   try {
     const contacts = await axios.delete(`${URL}/${id}`);
-
     return contacts.data;
   } catch (error) {
     console.log(error);
